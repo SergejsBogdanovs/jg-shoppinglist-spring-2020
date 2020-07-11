@@ -6,10 +6,10 @@ public class Product {
 
     private Long id;
     private String name;
-    private String category;
-    private Double discount;
     private String description;
     private Double price;
+    private Double discount;
+    private String category;
 
     public Double getPrice() {
         return price;
