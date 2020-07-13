@@ -9,4 +9,6 @@ public interface ProductRepository {
     Product save(Product product);
 
     Optional<Product> getProductById(Long id);
+
+    Product update(Product product);
 }

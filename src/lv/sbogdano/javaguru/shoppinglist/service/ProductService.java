@@ -20,4 +20,9 @@ public class ProductService {
         return repository.getProductById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found. Id: " + id));
     }
+
+    public Product updateProductById(Product product) {
+        validationService.validate(product);
+        return repository.update(product);
+    }
 }
