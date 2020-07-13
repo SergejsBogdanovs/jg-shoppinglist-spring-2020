@@ -4,59 +4,86 @@ import java.util.Objects;
 
 public class Product {
 
-    private Long id;
-    private String name;
-    private String description;
-    private Double price;
-    private Double discount;
-    private String category;
+    private final long id;
+    private final String name;
+    private final String description;
+    private final String price;
+    private final String discount;
+    private final String category;
 
-    public Double getPrice() {
-        return price;
+    public static class Builder {
+        private long id;
+        private String name;
+        private String description;
+        private String price;
+        private String discount;
+        private String category;
+
+        public Builder() {
+            this.id++;
+        }
+
+        public Builder name(String val) {
+            name = val;
+            return this;
+        }
+
+        public Builder description(String val) {
+            description = val;
+            return this;
+        }
+
+        public Builder price(String val) {
+            price = val;
+            return this;
+        }
+
+        public Builder discount(String val) {
+            discount = val;
+            return this;
+        }
+
+        public Builder category(String val) {
+            category = val;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this);
+        }
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    private Product(Builder builder) {
+        id = builder.id;
+        name = builder.name;
+        description = builder.description;
+        price = builder.price;
+        discount = builder.discount;
+        category = builder.category;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getPrice() {
+        return price;
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     @Override
@@ -85,7 +112,7 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
-                ", discount=" + discount +
+                ", discount='" + discount + '\'' +
                 ", description='" + description + '\'' +
                 ", price='" + price + '\'' +
                 '}';

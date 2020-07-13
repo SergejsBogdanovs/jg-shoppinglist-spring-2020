@@ -9,11 +9,11 @@ import java.util.Optional;
 public class ProductInMemoryRepository implements ProductRepository {
 
     private final Map<Long, Product> repository = new HashMap<>();
-    private long productId = 0L;
+    //private long productId = 0L;
 
     @Override
     public Product save(Product product) {
-        product.setId(productId++);
+        //product.setId(productId++);
         repository.put(product.getId(), product);
         return product;
     }

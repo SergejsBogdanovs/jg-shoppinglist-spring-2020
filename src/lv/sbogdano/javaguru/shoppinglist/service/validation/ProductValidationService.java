@@ -1,12 +1,36 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductValidationException;
 
 public class ProductValidationService {
 
-    private ProductValidationRule validationRule = new ProductValidationRule();
+    //private ProductValidationRule validationRule = new ProductValidationRule();
 
     public void validate(Product product) {
-        validationRule.validate(product);
+
+        if (product.getName() == null || product.getName().isEmpty() || product.getName().isBlank()) {
+            throw new ProductValidationException("Product name must not be null or blank or empty");
+        } else if (product.getCategory() == null || product.getCategory().isEmpty() || product.getCategory().isBlank()) {
+            throw new ProductValidationException("Product category must not be null or blank or empty");
+        } else if (product.getDescription() == null || product.getDescription().isEmpty() || product.getDescription().isBlank()) {
+            throw new ProductValidationException("Product description must not be null or blank or empty");
+        } else if (product.getPrice() == null || !isNumeric(product.getPrice()) || Long.parseLong(product.getPrice()) <= 0) {
+            throw new ProductValidationException("Product price must not be null or less than 0");
+        } else if (product.getDiscount() == null || !isNumeric(product.getDiscount()) || Long.parseLong(product.getDiscount()) < 0) {
+            throw new ProductValidationException("Product discount must not be null or less than 0");
+        }
+    }
+
+    private boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }
