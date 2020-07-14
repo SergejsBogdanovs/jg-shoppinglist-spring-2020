@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class ConsoleUI {
 
-    private ProductService productService = new ProductService();
-    private Scanner scanner = new Scanner(System.in);
+    private final ProductService productService = new ProductService();
+    private final Scanner scanner = new Scanner(System.in);
 
     public void start() {
 

@@ -8,8 +8,8 @@ import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductNot
 
 public class ProductService {
 
-    private ProductRepository repository = new ProductInMemoryRepository();
-    private ProductValidationService validationService = new ProductValidationService();
+    private final ProductRepository repository = new ProductInMemoryRepository();
+    private final ProductValidationService validationService = new ProductValidationService();
 
     public Product save(Product product) {
         validationService.validate(product);
