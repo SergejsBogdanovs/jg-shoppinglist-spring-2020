@@ -8,7 +8,9 @@ public interface ProductRepository {
 
     Product save(Product product);
 
-    Optional<Product> getProductById(Long id);
+    Optional<Product> getProductById(long id);
 
     Product update(Product product);
+
+    Optional<Product> delete(long id);
 }

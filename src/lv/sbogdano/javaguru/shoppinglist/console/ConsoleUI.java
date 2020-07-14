@@ -20,7 +20,8 @@ public class ConsoleUI {
                 System.out.println("1. Create product.");
                 System.out.println("2. Find product by id.");
                 System.out.println("3. Update product by id.");
-                System.out.println("4. Exit.");
+                System.out.println("4. Delete product by id.");
+                System.out.println("5. Exit.");
 
                 int userInput = Integer.valueOf(scanner.nextLine());
 
@@ -35,6 +36,9 @@ public class ConsoleUI {
                         updateProductById();
                         break;
                     case 4:
+                        deleteProductById();
+                        break;
+                    case 5:
                         return;
                 }
             } catch (ProductNotFoundException | ProductValidationException exception) {
@@ -107,5 +111,12 @@ public class ConsoleUI {
 
         var updatedProduct = productService.updateProductById(product);
         System.out.println("Product successfully updated: Product id " + updatedProduct);
+    }
+
+    private void deleteProductById() {
+        System.out.println("Enter product id to delete:");
+        long id = Long.parseLong(scanner.nextLine());
+        var deletedProduct = productService.deleteProduct(id);
+        System.out.println("Product deleted: " + deletedProduct);
     }
 }

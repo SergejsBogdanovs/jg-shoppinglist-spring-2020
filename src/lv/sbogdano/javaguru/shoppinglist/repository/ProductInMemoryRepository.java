@@ -19,7 +19,7 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> getProductById(Long id) {
+    public Optional<Product> getProductById(long id) {
         return Optional.ofNullable(repository.get(id));
     }
 
@@ -27,5 +27,10 @@ public class ProductInMemoryRepository implements ProductRepository {
     public Product update(Product product) {
         repository.replace(product.getId(), product);
         return product;
+    }
+
+    @Override
+    public Optional<Product> delete(long id) {
+        return Optional.ofNullable(repository.remove(id));
     }
 }

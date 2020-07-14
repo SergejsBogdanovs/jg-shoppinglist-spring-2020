@@ -16,7 +16,7 @@ public class ProductService {
         return repository.save(product);
     }
 
-    public Product findProductById(Long id) {
+    public Product findProductById(long id) {
         return repository.getProductById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found. Id: " + id));
     }
@@ -24,5 +24,10 @@ public class ProductService {
     public Product updateProductById(Product product) {
         validationService.validate(product);
         return repository.update(product);
+    }
+
+    public Product deleteProduct(long id) {
+        return repository.delete(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product not found. Id: " + id));
     }
 }
