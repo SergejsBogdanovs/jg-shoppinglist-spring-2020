@@ -1,36 +1,25 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.rule.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ProductValidationService {
 
-    //private ProductValidationRule validationRule = new ProductValidationRule();
+    private final Set<ProductValidationRule> validationRules = new HashSet<>();
+
+    public ProductValidationService() {
+        validationRules.add(new ProductNameValidationRule());
+        validationRules.add(new ProductPriceValidationRule());
+        validationRules.add(new ProductDiscountValidationRule());
+        validationRules.add(new ProductDescriptionValidationRule());
+        validationRules.add(new ProductCategoryValidationRule());
+    }
 
     public void validate(Product product) {
-
-        if (product.getName() == null || product.getName().isEmpty() || product.getName().isBlank()) {
-            throw new ProductValidationException("Product name must not be null or blank or empty");
-        } else if (product.getCategory() == null || product.getCategory().isEmpty() || product.getCategory().isBlank()) {
-            throw new ProductValidationException("Product category must not be null or blank or empty");
-        } else if (product.getDescription() == null || product.getDescription().isEmpty() || product.getDescription().isBlank()) {
-            throw new ProductValidationException("Product description must not be null or blank or empty");
-        } else if (product.getPrice() == null || !isNumeric(product.getPrice()) || Long.parseLong(product.getPrice()) <= 0) {
-            throw new ProductValidationException("Product price must not be null or less than 0");
-        } else if (product.getDiscount() == null || !isNumeric(product.getDiscount()) || Long.parseLong(product.getDiscount()) < 0) {
-            throw new ProductValidationException("Product discount must not be null or less than 0");
-        }
+        validationRules.forEach(rule -> rule.validate(product));
     }
 
-    private boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
 }
