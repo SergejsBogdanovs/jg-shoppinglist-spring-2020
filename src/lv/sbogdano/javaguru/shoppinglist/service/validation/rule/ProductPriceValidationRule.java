@@ -5,15 +5,24 @@ import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductVal
 
 public class ProductPriceValidationRule implements ProductValidationRule {
 
+    private String message;
+
     @Override
     public void validate(Product product) {
         if (!priceIsValid(product.getPrice())) {
-            throw new ProductValidationException("Product price must not be null or less than 0");
+            throw new ProductValidationException(message);
         }
     }
 
     private boolean priceIsValid(String price) {
-        return isNumeric(price) && Double.parseDouble(price) > 0;
+        if (!isNumeric(price)) {
+            message = "Product price must not be null";
+            return false;
+        } else if (Double.parseDouble(price) <= 0) {
+            message = "Product price must not be less than 0";
+            return false;
+        }
+        return true;
     }
 
     private boolean isNumeric(String strNum) {

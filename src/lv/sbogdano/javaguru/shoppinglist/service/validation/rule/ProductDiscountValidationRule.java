@@ -5,15 +5,27 @@ import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductVal
 
 public class ProductDiscountValidationRule implements ProductValidationRule {
 
+    private String message;
+
     @Override
     public void validate(Product product) {
-        if (!discountIsValid(product.getDiscount())) {
-            throw new ProductValidationException("Product discount must not be null or less than 0");
+        if (!discountIsValid(product)) {
+            throw new ProductValidationException(message);
         }
     }
 
-    private boolean discountIsValid(String discount) {
-        return isNumeric(discount) && Double.parseDouble(discount) >= 0 && Double.parseDouble(discount) <= 100;
+    private boolean discountIsValid(Product product) {
+        if (!isNumeric(product.getDiscount()) ||
+                Double.parseDouble(product.getDiscount()) < 0 ||
+                Double.parseDouble(product.getDiscount()) > 100) {
+            message = "Wrong discount format. Please enter number between 0 and 100";
+            return false;
+        } else if (Double.parseDouble(product.getPrice()) < 20) {
+            message = "Can not make discount because price is less than $20";
+            return false;
+        }
+
+        return true;
     }
 
     private boolean isNumeric(String strNum) {
