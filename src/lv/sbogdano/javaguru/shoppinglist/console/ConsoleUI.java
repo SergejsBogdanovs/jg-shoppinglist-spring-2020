@@ -26,7 +26,8 @@ public class ConsoleUI {
                 System.out.println("3. Update product by id.");
                 System.out.println("4. Delete product by id.");
                 System.out.println("5. Create shopping cart.");
-                System.out.println("6. Exit.");
+                System.out.println("6. Find shopping cart by id.");
+                System.out.println("7. Exit.");
 
                 int userInput = Integer.valueOf(scanner.nextLine());
 
@@ -45,7 +46,11 @@ public class ConsoleUI {
                         break;
                     case 5:
                         createShoppingCart();
+                        break;
                     case 6:
+                        findShoppingCartById();
+                        break;
+                    case 7:
                         return;
                 }
             } catch (ItemNotFoundException | ItemValidationException exception) {
@@ -55,6 +60,7 @@ public class ConsoleUI {
             }
         }
     }
+
 
     private void createProduct() {
         System.out.println("Enter product name:");
@@ -133,4 +139,10 @@ public class ConsoleUI {
         System.out.println("Shopping cart successfully created: Shopping cart " + createdShoppingCart);
     }
 
+    private void findShoppingCartById() {
+        System.out.println("Enter shopping cart id:");
+        long id = Long.parseLong(scanner.nextLine());
+        var shoppingCart = shoppingCartService.findShoppingCartById(id);
+        System.out.println("Shopping cart found: " + shoppingCart);
+    }
 }
