@@ -3,8 +3,8 @@ package lv.sbogdano.javaguru.shoppinglist.service;
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.ProductValidationService;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductNotFoundException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 
 public class ProductService {
 
@@ -18,7 +18,7 @@ public class ProductService {
 
     public Product findProductById(long id) {
         return repository.getProductById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found. Id: " + id));
+                .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
     }
 
     public Product updateProductById(Product product) {
@@ -28,6 +28,6 @@ public class ProductService {
 
     public Product deleteProduct(long id) {
         return repository.delete(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found. Id: " + id));
+                .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
     }
 }

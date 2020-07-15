@@ -1,4 +1,4 @@
-package lv.sbogdano.javaguru.shoppinglist.service.validation.rule;
+package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
 

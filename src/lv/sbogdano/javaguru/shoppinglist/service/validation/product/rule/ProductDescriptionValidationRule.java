@@ -1,14 +1,14 @@
-package lv.sbogdano.javaguru.shoppinglist.service.validation.rule;
+package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 
 public class ProductDescriptionValidationRule implements ProductValidationRule {
 
     @Override
     public void validate(Product product) {
         if (!descriptionIsValid(product.getDescription())) {
-            throw new ProductValidationException("Product description must not be null or blank or empty");
+            throw new ItemValidationException("Product description must not be null or blank or empty");
         }
     }
 

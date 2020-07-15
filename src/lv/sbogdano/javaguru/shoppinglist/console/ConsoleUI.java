@@ -1,15 +1,19 @@
 package lv.sbogdano.javaguru.shoppinglist.console;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.domain.ShoppingCart;
 import lv.sbogdano.javaguru.shoppinglist.service.ProductService;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductNotFoundException;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.ShoppingCartService;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleUI {
 
     private final ProductService productService = new ProductService();
+    private final ShoppingCartService shoppingCartService = new ShoppingCartService();
     private final Scanner scanner = new Scanner(System.in);
 
     public void start() {
@@ -21,7 +25,8 @@ public class ConsoleUI {
                 System.out.println("2. Find product by id.");
                 System.out.println("3. Update product by id.");
                 System.out.println("4. Delete product by id.");
-                System.out.println("5. Exit.");
+                System.out.println("5. Create shopping cart.");
+                System.out.println("6. Exit.");
 
                 int userInput = Integer.valueOf(scanner.nextLine());
 
@@ -39,14 +44,15 @@ public class ConsoleUI {
                         deleteProductById();
                         break;
                     case 5:
+                        createShoppingCart();
+                    case 6:
                         return;
                 }
-            } catch (ProductNotFoundException | ProductValidationException exception) {
+            } catch (ItemNotFoundException | ItemValidationException exception) {
                 System.out.println(exception.getMessage());
             } catch (Exception e) {
                 System.out.println("Error! Please try again");
             }
-
         }
     }
 
@@ -56,10 +62,8 @@ public class ConsoleUI {
         System.out.println("Enter product description:");
         String description = scanner.nextLine();
         System.out.println("Enter product price:");
-        //Double price = Double.valueOf(scanner.nextLine());
         String price = scanner.nextLine();
         System.out.println("Enter product discount:");
-        //Double discount = Double.valueOf(scanner.nextLine());
         String discount = scanner.nextLine();
         System.out.println("Enter product category:");
         String category = scanner.nextLine();
@@ -93,10 +97,8 @@ public class ConsoleUI {
         System.out.println("Enter new product description:");
         String newDescription = scanner.nextLine();
         System.out.println("Enter new product price:");
-        //Double price = Double.valueOf(scanner.nextLine());
         String newPrice = scanner.nextLine();
         System.out.println("Enter new product discount:");
-        //Double discount = Double.valueOf(scanner.nextLine());
         String newDiscount = scanner.nextLine();
         System.out.println("Enter new product category:");
         String newCategory = scanner.nextLine();
@@ -119,4 +121,16 @@ public class ConsoleUI {
         var deletedProduct = productService.deleteProduct(id);
         System.out.println("Product deleted: " + deletedProduct);
     }
+
+    private void createShoppingCart() {
+        System.out.println("Enter shopping cart name: ");
+        String name = scanner.nextLine();
+        var shoppingCart =  new ShoppingCart();
+        shoppingCart.setName(name);
+        shoppingCart.setProducts(new ArrayList<>());
+
+        ShoppingCart createdShoppingCart = shoppingCartService.save(shoppingCart);
+        System.out.println("Shopping cart successfully created: Shopping cart " + createdShoppingCart);
+    }
+
 }

@@ -1,7 +1,7 @@
-package lv.sbogdano.javaguru.shoppinglist.service.validation.rule;
+package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ProductValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ public class ProductNameValidationRule implements ProductValidationRule {
     @Override
     public void validate(Product product) {
         if (!nameIsValid(product.getName())) {
-            throw new ProductValidationException(message);
+            throw new ItemValidationException(message);
         }
     }
 

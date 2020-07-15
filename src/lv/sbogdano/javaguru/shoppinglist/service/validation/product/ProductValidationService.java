@@ -1,7 +1,7 @@
-package lv.sbogdano.javaguru.shoppinglist.service.validation;
+package lv.sbogdano.javaguru.shoppinglist.service.validation.product;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.Product;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.rule.*;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule.*;
 
 import java.util.HashSet;
 import java.util.Set;
