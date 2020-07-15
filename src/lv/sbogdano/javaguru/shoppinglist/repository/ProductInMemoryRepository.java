@@ -8,29 +8,30 @@ import java.util.Optional;
 
 public class ProductInMemoryRepository implements ProductRepository {
 
-    private final Map<Long, Product> repository = new HashMap<>();
+    private final Map<Long, Product> inMemoryDB = new HashMap<>();
     private long productId = 0L;
 
     @Override
     public Product save(Product product) {
         product.setId(productId++);
-        repository.put(product.getId(), product);
+        inMemoryDB.put(product.getId(), product);
         return product;
     }
 
     @Override
     public Optional<Product> getProductById(long id) {
-        return Optional.ofNullable(repository.get(id));
+        return Optional.ofNullable(inMemoryDB.get(id));
     }
 
     @Override
     public Product update(Product product) {
-        repository.replace(product.getId(), product);
+        inMemoryDB.replace(product.getId(), product);
         return product;
     }
 
     @Override
     public Optional<Product> delete(long id) {
-        return Optional.ofNullable(repository.remove(id));
+        return Optional.ofNullable(inMemoryDB.remove(id));
     }
+
 }
