@@ -13,8 +13,8 @@ import java.util.Scanner;
 public class ConsoleUI {
 
     private final ProductService productService = new ProductService();
-    private final ShoppingCartService shoppingCartService = new ShoppingCartService();
     private final Scanner scanner = new Scanner(System.in);
+    //private final ShoppingCartService shoppingCartService = new ShoppingCartService();
 
     public void start() {
 
@@ -25,9 +25,9 @@ public class ConsoleUI {
                 System.out.println("2. Find product by id.");
                 System.out.println("3. Update product by id.");
                 System.out.println("4. Delete product by id.");
-                System.out.println("5. Create shopping cart.");
-                System.out.println("6. Find shopping cart by id.");
-                System.out.println("7. Exit.");
+//                System.out.println("5. Create shopping cart.");
+//                System.out.println("6. Find shopping cart by id.");
+                System.out.println("5. Exit.");
 
                 int userInput = Integer.valueOf(scanner.nextLine());
 
@@ -44,13 +44,13 @@ public class ConsoleUI {
                     case 4:
                         deleteProductById();
                         break;
+//                    case 5:
+//                        createShoppingCart();
+//                        break;
+//                    case 6:
+//                        findShoppingCartById();
+//                        break;
                     case 5:
-                        createShoppingCart();
-                        break;
-                    case 6:
-                        findShoppingCartById();
-                        break;
-                    case 7:
                         return;
                 }
             } catch (ItemNotFoundException | ItemValidationException exception) {
@@ -128,21 +128,21 @@ public class ConsoleUI {
         System.out.println("Product deleted: " + deletedProduct);
     }
 
-    private void createShoppingCart() {
-        System.out.println("Enter shopping cart name: ");
-        String name = scanner.nextLine();
-        var shoppingCart =  new ShoppingCart();
-        shoppingCart.setName(name);
-        shoppingCart.setProducts(new ArrayList<>());
-
-        ShoppingCart createdShoppingCart = shoppingCartService.save(shoppingCart);
-        System.out.println("Shopping cart successfully created: Shopping cart " + createdShoppingCart);
-    }
-
-    private void findShoppingCartById() {
-        System.out.println("Enter shopping cart id:");
-        long id = Long.parseLong(scanner.nextLine());
-        var shoppingCart = shoppingCartService.findShoppingCartById(id);
-        System.out.println("Shopping cart found: " + shoppingCart);
-    }
+//    private void createShoppingCart() {
+//        System.out.println("Enter shopping cart name: ");
+//        String name = scanner.nextLine();
+//        var shoppingCart =  new ShoppingCart();
+//        shoppingCart.setName(name);
+//        shoppingCart.setProducts(new ArrayList<>());
+//
+//        ShoppingCart createdShoppingCart = shoppingCartService.save(shoppingCart);
+//        System.out.println("Shopping cart successfully created: Shopping cart " + createdShoppingCart);
+//    }
+//
+//    private void findShoppingCartById() {
+//        System.out.println("Enter shopping cart id:");
+//        long id = Long.parseLong(scanner.nextLine());
+//        var shoppingCart = shoppingCartService.findShoppingCartById(id);
+//        System.out.println("Shopping cart found: " + shoppingCart);
+//    }
 }
