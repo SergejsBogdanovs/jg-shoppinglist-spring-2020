@@ -1,6 +1,6 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule.*;
 
 import java.util.HashSet;
@@ -18,8 +18,8 @@ public class ProductValidationService {
         validationRules.add(new ProductCategoryValidationRule());
     }
 
-    public void validate(Product product) {
-        validationRules.forEach(rule -> rule.validate(product));
+    public void validate(ProductDto productDto) {
+        validationRules.forEach(rule -> rule.validate(productDto));
     }
 
 }

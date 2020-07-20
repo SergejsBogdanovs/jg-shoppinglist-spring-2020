@@ -1,16 +1,16 @@
 package lv.sbogdano.javaguru.shoppinglist.repository;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 
 import java.util.Optional;
 
 public interface ProductRepository {
 
-    Product save(Product product);
+    ProductEntity save(ProductEntity productEntity);
 
-    Optional<Product> getProductById(long id);
+    Optional<ProductEntity> getProductById(long id);
 
-    Product update(Product product);
+    ProductEntity update(ProductEntity productEntity);
 
-    Optional<Product> delete(long id);
+    Optional<ProductEntity> delete(long id);
 }

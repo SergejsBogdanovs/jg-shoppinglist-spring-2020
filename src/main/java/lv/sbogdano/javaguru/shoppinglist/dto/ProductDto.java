@@ -1,9 +1,9 @@
-package lv.sbogdano.javaguru.shoppinglist.domain;
+package lv.sbogdano.javaguru.shoppinglist.dto;
 
 import lombok.Data;
 
 @Data
-public class Product {
+public class ProductDto {
     private long id;
     private String name;
     private String description;

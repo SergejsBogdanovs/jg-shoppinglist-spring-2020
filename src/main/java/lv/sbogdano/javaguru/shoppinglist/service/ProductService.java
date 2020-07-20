@@ -1,6 +1,8 @@
 package lv.sbogdano.javaguru.shoppinglist.service;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
+import lv.sbogdano.javaguru.shoppinglist.mapper.BeanMapper;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
@@ -10,24 +12,29 @@ public class ProductService {
 
     private final ProductRepository repository = new ProductInMemoryRepository();
     private final ProductValidationService validationService = new ProductValidationService();
+    private final BeanMapper beanMapper = new BeanMapper();
 
-    public Product save(Product product) {
-        validationService.validate(product);
-        return repository.save(product);
+    public ProductDto save(ProductDto productDto) {
+        validationService.validate(productDto);
+        ProductEntity savedProductEntity = repository.save(beanMapper.toProductEntity(productDto));
+        return beanMapper.toProductDto(savedProductEntity);
     }
 
-    public Product findProductById(long id) {
-        return repository.getProductById(id)
+    public ProductDto findProductById(long id) {
+        ProductEntity foundProductEntity = repository.getProductById(id)
                 .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
+        return beanMapper.toProductDto(foundProductEntity);
     }
 
-    public Product updateProductById(Product product) {
-        validationService.validate(product);
-        return repository.update(product);
+    public ProductDto updateProductById(ProductDto productDto) {
+        validationService.validate(productDto);
+        ProductEntity updateProductEntity = repository.update(beanMapper.toProductEntity(productDto));
+        return beanMapper.toProductDto(updateProductEntity);
     }
 
-    public Product deleteProduct(long id) {
-        return repository.delete(id)
+    public ProductDto deleteProduct(long id) {
+        ProductEntity deletedProductEntity = repository.delete(id)
                 .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
+        return beanMapper.toProductDto(deletedProductEntity);
     }
 }

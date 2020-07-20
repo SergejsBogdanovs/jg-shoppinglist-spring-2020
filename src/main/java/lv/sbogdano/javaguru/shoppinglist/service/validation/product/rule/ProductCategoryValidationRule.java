@@ -1,13 +1,13 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 
 public class ProductCategoryValidationRule implements ProductValidationRule {
 
     @Override
-    public void validate(Product product) {
-        if (!categoryIsValid(product.getCategory())) {
+    public void validate(ProductDto productDto) {
+        if (!categoryIsValid(productDto.getCategory())) {
             throw new ItemValidationException("Product category must not be null or blank or empty");
         }
     }

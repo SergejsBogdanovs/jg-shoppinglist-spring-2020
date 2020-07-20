@@ -1,9 +1,9 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 
 public interface ProductValidationRule {
 
-    void validate(Product product);
+    void validate(ProductDto productDto);
 
 }

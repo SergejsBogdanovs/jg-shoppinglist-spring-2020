@@ -1,6 +1,6 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 
 public class ProductPriceValidationRule implements ProductValidationRule {
@@ -8,8 +8,8 @@ public class ProductPriceValidationRule implements ProductValidationRule {
     private String message;
 
     @Override
-    public void validate(Product product) {
-        if (!priceIsValid(product.getPrice())) {
+    public void validate(ProductDto productDto) {
+        if (!priceIsValid(productDto.getPrice())) {
             throw new ItemValidationException(message);
         }
     }

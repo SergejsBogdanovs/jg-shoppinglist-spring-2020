@@ -1,6 +1,6 @@
 package lv.sbogdano.javaguru.shoppinglist.repository;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,29 +8,29 @@ import java.util.Optional;
 
 public class ProductInMemoryRepository implements ProductRepository {
 
-    private final Map<Long, Product> inMemoryDB = new HashMap<>();
+    private final Map<Long, ProductEntity> inMemoryDB = new HashMap<>();
     private long productId = 0L;
 
     @Override
-    public Product save(Product product) {
-        product.setId(productId++);
-        inMemoryDB.put(product.getId(), product);
-        return product;
+    public ProductEntity save(ProductEntity productEntity) {
+        productEntity.setId(productId++);
+        inMemoryDB.put(productEntity.getId(), productEntity);
+        return productEntity;
     }
 
     @Override
-    public Optional<Product> getProductById(long id) {
+    public Optional<ProductEntity> getProductById(long id) {
         return Optional.ofNullable(inMemoryDB.get(id));
     }
 
     @Override
-    public Product update(Product product) {
-        inMemoryDB.replace(product.getId(), product);
-        return product;
+    public ProductEntity update(ProductEntity productEntity) {
+        inMemoryDB.replace(productEntity.getId(), productEntity);
+        return productEntity;
     }
 
     @Override
-    public Optional<Product> delete(long id) {
+    public Optional<ProductEntity> delete(long id) {
         return Optional.ofNullable(inMemoryDB.remove(id));
     }
 

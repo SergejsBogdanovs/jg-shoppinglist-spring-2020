@@ -1,6 +1,6 @@
 package lv.sbogdano.javaguru.shoppinglist.console;
 
-import lv.sbogdano.javaguru.shoppinglist.domain.Product;
+import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.ProductService;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
@@ -41,10 +41,12 @@ public class ConsoleUI {
                     case 5:
                         return;
                 }
-            } catch (ItemNotFoundException | ItemValidationException exception) {
+            } catch (ItemNotFoundException | ItemValidationException exception ) {
                 System.out.println(exception.getMessage());
+            } catch (NumberFormatException nfe) {
+                System.out.println("Price is incorrect.");
             } catch (Exception e) {
-                System.out.println("Error! Please try again");
+                System.out.println("Error! Please try again.");
             }
         }
     }
@@ -61,22 +63,22 @@ public class ConsoleUI {
         System.out.println("Enter product category:");
         String category = scanner.nextLine();
 
-        var product = new Product();
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setDiscount(discount);
-        product.setCategory(category);
+        var productDto = new ProductDto();
+        productDto.setName(name);
+        productDto.setDescription(description);
+        productDto.setPrice(price);
+        productDto.setDiscount(discount);
+        productDto.setCategory(category);
 
-        Product createdProduct = productService.save(product);
-        System.out.println("Product successfully created: Product id " + createdProduct);
+        ProductDto createdProductDto = productService.save(productDto);
+        System.out.println("Product successfully created: Product id " + createdProductDto);
     }
 
     private void findProductById() {
         System.out.println("Enter product id:");
         long id = Long.parseLong(scanner.nextLine());
-        var product = productService.findProductById(id);
-        System.out.println("Product found: " + product);
+        var foundProductDto = productService.findProductById(id);
+        System.out.println("Product found: " + foundProductDto);
     }
 
     private void updateProductById() {
@@ -96,22 +98,22 @@ public class ConsoleUI {
         System.out.println("Enter new product category:");
         String newCategory = scanner.nextLine();
 
-        var product = new Product();
-        product.setId(foundProduct.getId());
-        product.setName(newName);
-        product.setDescription(newDescription);
-        product.setPrice(newPrice);
-        product.setDiscount(newDiscount);
-        product.setCategory(newCategory);
+        var newProductDto = new ProductDto();
+        newProductDto.setId(foundProduct.getId());
+        newProductDto.setName(newName);
+        newProductDto.setDescription(newDescription);
+        newProductDto.setPrice(newPrice);
+        newProductDto.setDiscount(newDiscount);
+        newProductDto.setCategory(newCategory);
 
-        var updatedProduct = productService.updateProductById(product);
-        System.out.println("Product successfully updated: Product id " + updatedProduct);
+        var updatedProductDto = productService.updateProductById(newProductDto);
+        System.out.println("Product successfully updated: Product " + updatedProductDto);
     }
 
     private void deleteProductById() {
         System.out.println("Enter product id to delete:");
         long id = Long.parseLong(scanner.nextLine());
-        var deletedProduct = productService.deleteProduct(id);
-        System.out.println("Product deleted: " + deletedProduct);
+        var deletedProductDto = productService.deleteProduct(id);
+        System.out.println("Product deleted: " + deletedProductDto);
     }
 }
