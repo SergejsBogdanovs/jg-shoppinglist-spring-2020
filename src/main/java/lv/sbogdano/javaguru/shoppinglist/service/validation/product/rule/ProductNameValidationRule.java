@@ -14,13 +14,14 @@ public class ProductNameValidationRule implements ProductValidationRule {
     @Override
     public void validate(ProductDto productDto) {
         if (!nameIsValid(productDto.getName())) {
+            names.clear();
             throw new ItemValidationException(message);
         }
     }
 
     private boolean nameIsValid(String name) {
         if (name == null || name.isEmpty() || name.isBlank()) {
-            message = "Product name must not be null or blank or empty";
+            message = "Product name must not be null or blank or empty.";
             return false;
         } else if (name.length() < 3 || name.length() > 32) {
             message = "Product name length must be from 3 to 32 characters long.";

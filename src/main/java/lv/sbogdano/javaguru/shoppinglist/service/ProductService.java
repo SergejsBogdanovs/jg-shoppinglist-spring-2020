@@ -10,9 +10,9 @@ import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFou
 
 public class ProductService {
 
-    private final ProductRepository repository = new ProductInMemoryRepository();
-    private final ProductValidationService validationService = new ProductValidationService();
-    private final BeanMapper beanMapper = new BeanMapper();
+    private ProductRepository repository = new ProductInMemoryRepository();
+    private ProductValidationService validationService = new ProductValidationService();
+    private BeanMapper beanMapper = new BeanMapper();
 
     public ProductDto save(ProductDto productDto) {
         validationService.validate(productDto);

@@ -46,7 +46,8 @@ public class ConsoleUI {
             } catch (NumberFormatException nfe) {
                 System.out.println("Price is incorrect.");
             } catch (Exception e) {
-                System.out.println("Error! Please try again.");
+//                System.out.println("Error! Please try again.");
+                e.printStackTrace();
             }
         }
     }
