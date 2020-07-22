@@ -18,10 +18,10 @@ public class ProductDiscountValidationRule implements ProductValidationRule {
         if (!isNumeric(productDto.getDiscount()) ||
                 Double.parseDouble(productDto.getDiscount()) < 0 ||
                 Double.parseDouble(productDto.getDiscount()) > 100) {
-            message = "Wrong discount format. Please enter number between 0 and 100";
+            message = "Wrong discount format. Please enter number between 0 and 100.";
             return false;
         } else if (Double.parseDouble(productDto.getPrice()) < 20 && Double.parseDouble(productDto.getDiscount()) > 0) {
-            message = "Can not make discount because price is less than $20";
+            message = "Can not make discount because price is less than $20.";
             return false;
         }
 
