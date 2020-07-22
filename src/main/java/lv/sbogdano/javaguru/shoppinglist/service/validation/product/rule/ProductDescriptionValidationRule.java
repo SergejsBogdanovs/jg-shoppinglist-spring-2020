@@ -8,7 +8,7 @@ public class ProductDescriptionValidationRule implements ProductValidationRule {
     @Override
     public void validate(ProductDto productDto) {
         if (!descriptionIsValid(productDto.getDescription())) {
-            throw new ItemValidationException("Product description must not be null or blank or empty");
+            throw new ItemValidationException("Product description must not be null or blank or empty.");
         }
     }
 
