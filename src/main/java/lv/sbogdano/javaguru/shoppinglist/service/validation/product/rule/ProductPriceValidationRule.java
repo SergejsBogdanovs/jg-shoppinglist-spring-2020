@@ -16,10 +16,10 @@ public class ProductPriceValidationRule implements ProductValidationRule {
 
     private boolean priceIsValid(String price) {
         if (!isNumeric(price)) {
-            message = "Product price must not be null";
+            message = "Product price must not be null.";
             return false;
         } else if (Double.parseDouble(price) <= 0) {
-            message = "Product price must not be less than 0";
+            message = "Product price must not be 0 or less.";
             return false;
         }
         return true;
