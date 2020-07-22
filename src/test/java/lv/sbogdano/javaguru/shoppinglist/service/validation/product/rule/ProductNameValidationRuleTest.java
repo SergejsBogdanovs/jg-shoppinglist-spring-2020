@@ -50,7 +50,7 @@ public class ProductNameValidationRuleTest {
     }
 
     @Test
-    public void productNameShouldNotDuplicate() {
+    public void productNameShouldNotContainDuplicates() {
 
         victim.validate(getProductDto("name"));
 
@@ -63,10 +63,10 @@ public class ProductNameValidationRuleTest {
     }
 
 
-    private ProductDto getProductDto(String invalidName) {
+    private ProductDto getProductDto(String name) {
         var productDto = new ProductDto();
         productDto.setId(1L);
-        productDto.setName(invalidName);
+        productDto.setName(name);
         productDto.setDescription("DESCRIPTION");
         productDto.setPrice("PRICE");
         productDto.setDiscount("DISCOUNT");
