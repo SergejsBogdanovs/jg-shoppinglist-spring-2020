@@ -1,18 +1,31 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
+import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
+import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductNameValidationRuleTest {
 
-    private final ProductNameValidationRule victim = new ProductNameValidationRule();
+    @Mock
+    private ProductRepository productRepository;
+
+    @InjectMocks
+    private ProductNameValidationRule victim;
 
     @Test
     public void productNameShouldNotBeEmpty() {
@@ -23,12 +36,9 @@ public class ProductNameValidationRuleTest {
         };
 
         for (String invalidName : invalidNames) {
-            Exception exception = assertThrows(ItemValidationException.class,
-                    () -> victim.validate(getProductDto(invalidName)));
-
-            String expectedMessage = "Product name must not be null or blank or empty.";
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains(expectedMessage));
+            assertThatThrownBy(() -> victim.validate(getProductDto(invalidName)))
+                    .isInstanceOf(ItemValidationException.class)
+                    .hasMessage("Product name must not be null or blank or empty.");
         }
     }
 
@@ -40,26 +50,20 @@ public class ProductNameValidationRuleTest {
         };
 
         for (String invalidName : invalidNames) {
-            Exception exception = assertThrows(ItemValidationException.class,
-                    () -> victim.validate(getProductDto(invalidName)));
-
-            String expectedMessage = "Product name length must be from 3 to 32 characters long.";
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains(expectedMessage));
+            assertThatThrownBy(() -> victim.validate(getProductDto(invalidName)))
+                    .isInstanceOf(ItemValidationException.class)
+                    .hasMessage("Product name length must be from 3 to 32 characters long.");
         }
     }
 
     @Test
     public void productNameShouldNotContainDuplicates() {
 
-        victim.validate(getProductDto("name"));
+        when(productRepository.getProductById(anyLong())).thenReturn(Optional.of(productEntity()));
 
-        Exception exception = assertThrows(ItemValidationException.class,
-                () -> victim.validate(getProductDto("name")));
-
-        String expectedMessage = "Product name already exist in DB. Please choose different product name.";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertThatThrownBy(() -> victim.validate(getProductDto("NAME")))
+                .isInstanceOf(ItemValidationException.class)
+                .hasMessage("Product name already exist in DB. Please choose different product name.");
     }
 
 
@@ -74,5 +78,17 @@ public class ProductNameValidationRuleTest {
 
         return productDto;
     }
+
+    private ProductEntity productEntity() {
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setId(1L);
+        productEntity.setName("NAME");
+        productEntity.setDescription("DESCRIPTION");
+        productEntity.setPrice("PRICE");
+        productEntity.setDiscount("DISCOUNT");
+        productEntity.setCategory("CATEGORY");
+        return productEntity;
+    }
+
 
 }

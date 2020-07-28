@@ -1,6 +1,8 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
+import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
+import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule.*;
 
 import java.util.HashSet;
@@ -10,8 +12,8 @@ public class ProductValidationService {
 
     private final Set<ProductValidationRule> validationRules = new HashSet<>();
 
-    public ProductValidationService() {
-        validationRules.add(new ProductNameValidationRule());
+    public ProductValidationService(ProductRepository repository) {
+        validationRules.add(new ProductNameValidationRule(repository));
         validationRules.add(new ProductPriceValidationRule());
         validationRules.add(new ProductDiscountValidationRule());
         validationRules.add(new ProductDescriptionValidationRule());

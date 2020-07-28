@@ -4,6 +4,7 @@ import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 
 public class ProductPriceValidationRuleTest {
@@ -15,12 +16,9 @@ public class ProductPriceValidationRuleTest {
         String[] invalidPriceFormats = {null, "", " ", "a"};
 
         for (String invalidPriceFormat : invalidPriceFormats) {
-            Exception exception = assertThrows(ItemValidationException.class,
-                    () -> victim.validate(getProductDto(invalidPriceFormat)));
-
-            String expectedMessage = "Product price must not be null.";
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains(expectedMessage));
+            assertThatThrownBy(() -> victim.validate(getProductDto(invalidPriceFormat)))
+                    .isInstanceOf(ItemValidationException.class)
+                    .hasMessage("Product price must not be null.");
         }
     }
 
@@ -29,13 +27,9 @@ public class ProductPriceValidationRuleTest {
         String[] invalidPriceFormats = {"-1", "0"};
 
         for (String invalidPriceFormat : invalidPriceFormats) {
-
-            Exception exception = assertThrows(ItemValidationException.class,
-                    () -> victim.validate(getProductDto(invalidPriceFormat)));
-
-            String expectedMessage = "Product price must not be 0 or less.";
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains(expectedMessage));
+            assertThatThrownBy(() -> victim.validate(getProductDto(invalidPriceFormat)))
+                    .isInstanceOf(ItemValidationException.class)
+                    .hasMessage("Product price must not be 0 or less.");
         }
     }
 

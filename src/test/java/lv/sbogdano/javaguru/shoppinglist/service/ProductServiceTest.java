@@ -5,6 +5,7 @@ import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.mapper.BeanMapper;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -60,12 +62,9 @@ public class ProductServiceTest {
     public void shouldThrowItemNotFoundException() {
         when(productRepository.getProductById(anyLong())).thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(ItemNotFoundException.class, () -> victim.findProductById(1L));
-
-        String expectedMessage = "Product not found. Id: " + 1;
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertThatThrownBy(() -> victim.findProductById(1L))
+                .isInstanceOf(ItemNotFoundException.class)
+                .hasMessage("Product not found. Id: " + 1);
     }
 
     @Test

@@ -4,7 +4,7 @@ import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ProductDescriptionValidationRuleTest {
 
@@ -19,12 +19,9 @@ public class ProductDescriptionValidationRuleTest {
         };
 
         for (String invalidDescription : invalidDescriptions) {
-            Exception exception = assertThrows(ItemValidationException.class,
-                    () -> victim.validate(getProductDto(invalidDescription)));
-
-            String expectedMessage = "Product description must not be null or blank or empty.";
-            String actualMessage = exception.getMessage();
-            assertTrue(actualMessage.contains(expectedMessage));
+            assertThatThrownBy(() -> victim.validate(getProductDto(invalidDescription)))
+                    .isInstanceOf(ItemValidationException.class)
+                    .hasMessage("Product description must not be null or blank or empty.");
         }
     }
 
