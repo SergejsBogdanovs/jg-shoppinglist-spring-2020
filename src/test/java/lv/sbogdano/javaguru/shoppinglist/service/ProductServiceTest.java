@@ -7,6 +7,7 @@ import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
+import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -17,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -45,7 +47,8 @@ public class ProductServiceTest {
         ProductDto savedProductDto = victim.save(productDto());
 
         verify(productValidationService).validate(any());
-        assertEquals(productDto(), savedProductDto);
+
+        assertThat(savedProductDto).isEqualTo(productDto());
     }
 
     @Test
@@ -55,7 +58,7 @@ public class ProductServiceTest {
 
         ProductDto foundProduct = victim.findProductById(1L);
 
-        assertEquals(productDto(), foundProduct);
+        assertThat(foundProduct).isEqualTo(productDto());
     }
 
     @Test
@@ -75,7 +78,7 @@ public class ProductServiceTest {
         ProductDto replacedProduct = victim.updateProductById(productDto());
 
         verify(productValidationService).validate(any());
-        assertEquals(productDto(), replacedProduct);
+        assertThat(replacedProduct).isEqualTo(productDto());
     }
 
     @Test
@@ -85,7 +88,7 @@ public class ProductServiceTest {
 
         ProductDto deletedProduct = victim.deleteProduct(1L);
 
-        assertEquals(productDto(), deletedProduct);
+        assertThat(deletedProduct).isEqualTo(productDto());
     }
 
     private ProductEntity productEntity() {
