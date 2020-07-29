@@ -40,8 +40,6 @@ public class ProductNameValidationRule implements ProductValidationRule {
     }
 
     private boolean nameExist(ProductDto productDto) {
-        Optional<ProductEntity> foundProductEntity = repository.getProductById(productDto.getId());
-        String name = foundProductEntity.isPresent() ? foundProductEntity.get().getName() : "";
-        return productDto.getName().equals(name);
+        return repository.getProductByName(productDto.getName()).isPresent();
     }
 }

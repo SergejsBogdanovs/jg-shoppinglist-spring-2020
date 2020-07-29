@@ -24,6 +24,13 @@ public class ProductInMemoryRepository implements ProductRepository {
     }
 
     @Override
+    public Optional<ProductEntity> getProductByName(String name) {
+        return inMemoryDB.values().stream()
+                .filter(productEntity -> productEntity.getName().equalsIgnoreCase(name))
+                .findFirst();
+    }
+
+    @Override
     public ProductEntity update(ProductEntity productEntity) {
         inMemoryDB.replace(productEntity.getId(), productEntity);
         return productEntity;

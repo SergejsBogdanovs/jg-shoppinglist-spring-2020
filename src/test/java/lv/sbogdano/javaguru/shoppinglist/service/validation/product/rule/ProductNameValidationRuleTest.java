@@ -59,7 +59,7 @@ public class ProductNameValidationRuleTest {
     @Test
     public void productNameShouldNotContainDuplicates() {
 
-        when(productRepository.getProductById(anyLong())).thenReturn(Optional.of(productEntity()));
+        when(productRepository.getProductByName("NAME")).thenReturn(Optional.of(productEntity()));
 
         assertThatThrownBy(() -> victim.validate(getProductDto("NAME")))
                 .isInstanceOf(ItemValidationException.class)

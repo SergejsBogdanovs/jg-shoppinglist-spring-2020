@@ -10,6 +10,8 @@ public interface ProductRepository {
 
     Optional<ProductEntity> getProductById(long id);
 
+    Optional<ProductEntity> getProductByName(String name);
+
     ProductEntity update(ProductEntity productEntity);
 
     Optional<ProductEntity> delete(long id);
