@@ -10,14 +10,10 @@ import java.util.Set;
 
 public class ProductValidationService {
 
-    private final Set<ProductValidationRule> validationRules = new HashSet<>();
+    private Set<ProductValidationRule> validationRules;
 
-    public ProductValidationService(ProductRepository repository) {
-        validationRules.add(new ProductNameValidationRule(repository));
-        validationRules.add(new ProductPriceValidationRule());
-        validationRules.add(new ProductDiscountValidationRule());
-        validationRules.add(new ProductDescriptionValidationRule());
-        validationRules.add(new ProductCategoryValidationRule());
+    public ProductValidationService(Set<ProductValidationRule> validationRules) {
+        this.validationRules = validationRules;
     }
 
     public void validate(ProductDto productDto) {
