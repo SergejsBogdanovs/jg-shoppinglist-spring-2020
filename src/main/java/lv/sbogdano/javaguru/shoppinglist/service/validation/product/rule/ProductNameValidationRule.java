@@ -4,6 +4,7 @@ import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -27,13 +28,13 @@ public class ProductNameValidationRule implements ProductValidationRule {
 
     private boolean nameIsValid(ProductDto productDto) {
         if (productDto.getName() == null || productDto.getName().isEmpty() || productDto.getName().isBlank()) {
-            message = "Product name must not be null or blank or empty.";
+            message = ProductValidationExceptionMessages.PRODUCT_NAME_EMPTY_EXCEPTION_MESSAGE;
             return false;
         } else if (productDto.getName().length() < 3 || productDto.getName().length() > 32) {
-            message = "Product name length must be from 3 to 32 characters long.";
+            message = ProductValidationExceptionMessages.PRODUCT_NAME_LENGTH_EXCEPTION_MESSAGE;
             return false;
         } else if (nameExist(productDto)) {
-            message = "Product name already exist in DB. Please choose different product name.";
+            message = ProductValidationExceptionMessages.PRODUCT_NAME_UNIQUE_EXCEPTION_MESSAGE;
             return false;
         }
         return true;

@@ -2,6 +2,7 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 
 public class ProductPriceValidationRule implements ProductValidationRule {
 
@@ -16,10 +17,10 @@ public class ProductPriceValidationRule implements ProductValidationRule {
 
     private boolean priceIsValid(String price) {
         if (!isNumeric(price)) {
-            message = "Product price must not be null.";
+            message = ProductValidationExceptionMessages.PRODUCT_PRICE_EMPTY_EXCEPTION_MESSAGE;
             return false;
         } else if (Double.parseDouble(price) <= 0) {
-            message = "Product price must not be 0 or less.";
+            message = ProductValidationExceptionMessages.PRODUCT_PRICE_IS_ZERO_EXCEPTION_MESSAGE;
             return false;
         }
         return true;

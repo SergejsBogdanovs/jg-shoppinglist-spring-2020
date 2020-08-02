@@ -6,6 +6,7 @@ import lv.sbogdano.javaguru.shoppinglist.mapper.BeanMapper;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.assertj.core.api.Assertions;
 import org.junit.Rule;
@@ -67,7 +68,7 @@ public class ProductServiceTest {
 
         assertThatThrownBy(() -> victim.findProductById(1L))
                 .isInstanceOf(ItemNotFoundException.class)
-                .hasMessage("Product not found. Id: " + 1);
+                .hasMessage(ProductValidationExceptionMessages.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE + 1);
     }
 
     @Test

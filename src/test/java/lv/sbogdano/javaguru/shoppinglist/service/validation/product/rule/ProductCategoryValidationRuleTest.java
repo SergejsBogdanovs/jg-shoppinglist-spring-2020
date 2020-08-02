@@ -2,13 +2,19 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProductCategoryValidationRuleTest {
 
-    private final ProductCategoryValidationRule victim = new ProductCategoryValidationRule();
+    @InjectMocks
+    private ProductCategoryValidationRule victim;
 
     @Test
     public void productCategoryShouldNotBeEmpty() {
@@ -21,7 +27,7 @@ public class ProductCategoryValidationRuleTest {
         for (String invalidCategory : invalidCategories) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidCategory)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Product category must not be null or blank or empty.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_CATEGORY_EMPTY_EXCEPTION_MESSAGE);
         }
     }
 

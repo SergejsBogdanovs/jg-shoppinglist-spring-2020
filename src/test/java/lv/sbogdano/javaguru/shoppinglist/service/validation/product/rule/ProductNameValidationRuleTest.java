@@ -4,6 +4,7 @@ import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -38,7 +39,7 @@ public class ProductNameValidationRuleTest {
         for (String invalidName : invalidNames) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidName)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Product name must not be null or blank or empty.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_NAME_EMPTY_EXCEPTION_MESSAGE);
         }
     }
 
@@ -52,7 +53,7 @@ public class ProductNameValidationRuleTest {
         for (String invalidName : invalidNames) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidName)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Product name length must be from 3 to 32 characters long.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_NAME_LENGTH_EXCEPTION_MESSAGE);
         }
     }
 
@@ -63,9 +64,8 @@ public class ProductNameValidationRuleTest {
 
         assertThatThrownBy(() -> victim.validate(getProductDto("NAME")))
                 .isInstanceOf(ItemValidationException.class)
-                .hasMessage("Product name already exist in DB. Please choose different product name.");
+                .hasMessage(ProductValidationExceptionMessages.PRODUCT_NAME_UNIQUE_EXCEPTION_MESSAGE);
     }
-
 
     private ProductDto getProductDto(String name) {
         var productDto = new ProductDto();

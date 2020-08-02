@@ -2,14 +2,20 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProductPriceValidationRuleTest {
 
-    private final ProductPriceValidationRule victim = new ProductPriceValidationRule();
+    @InjectMocks
+    private ProductPriceValidationRule victim;
 
     @Test
     public void productPriceShouldNotBeNull() {
@@ -18,7 +24,7 @@ public class ProductPriceValidationRuleTest {
         for (String invalidPriceFormat : invalidPriceFormats) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidPriceFormat)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Product price must not be null.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_PRICE_EMPTY_EXCEPTION_MESSAGE);
         }
     }
 
@@ -29,7 +35,7 @@ public class ProductPriceValidationRuleTest {
         for (String invalidPriceFormat : invalidPriceFormats) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidPriceFormat)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Product price must not be 0 or less.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_PRICE_IS_ZERO_EXCEPTION_MESSAGE);
         }
     }
 

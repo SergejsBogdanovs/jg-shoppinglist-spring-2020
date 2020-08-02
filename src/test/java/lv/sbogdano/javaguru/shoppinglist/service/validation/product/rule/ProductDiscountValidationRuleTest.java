@@ -2,14 +2,20 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProductDiscountValidationRuleTest {
 
-    private final ProductDiscountValidationRule victim = new ProductDiscountValidationRule();
+    @InjectMocks
+    private ProductDiscountValidationRule victim;
 
     @Test
     public void productDiscountShouldBeNumber() {
@@ -18,7 +24,7 @@ public class ProductDiscountValidationRuleTest {
         for (String invalidDiscountFormat : invalidDiscountFormats) {
             assertThatThrownBy(() -> victim.validate(getProductDto(invalidDiscountFormat)))
                     .isInstanceOf(ItemValidationException.class)
-                    .hasMessage("Wrong discount format. Please enter number between 0 and 100.");
+                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_WRONG_FORMAT_EXCEPTION);
         }
     }
 
@@ -26,7 +32,7 @@ public class ProductDiscountValidationRuleTest {
     public void ifPriceIsSmallDiscountNotAllowed() {
         assertThatThrownBy(() -> victim.validate(getProductDto("10")))
                 .isInstanceOf(ItemValidationException.class)
-                .hasMessage("Can not make discount because price is less than $20.");
+                .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_PRICE_IS_SMALL_EXCEPTION);
     }
 
     private ProductDto getProductDto(String discount) {

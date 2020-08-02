@@ -2,6 +2,7 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 
 public class ProductDiscountValidationRule implements ProductValidationRule {
 
@@ -18,10 +19,10 @@ public class ProductDiscountValidationRule implements ProductValidationRule {
         if (!isNumeric(productDto.getDiscount()) ||
                 Double.parseDouble(productDto.getDiscount()) < 0 ||
                 Double.parseDouble(productDto.getDiscount()) > 100) {
-            message = "Wrong discount format. Please enter number between 0 and 100.";
+            message = ProductValidationExceptionMessages.PRODUCT_DISCOUNT_WRONG_FORMAT_EXCEPTION;
             return false;
         } else if (Double.parseDouble(productDto.getPrice()) < 20 && Double.parseDouble(productDto.getDiscount()) > 0) {
-            message = "Can not make discount because price is less than $20.";
+            message = ProductValidationExceptionMessages.PRODUCT_DISCOUNT_PRICE_IS_SMALL_EXCEPTION;
             return false;
         }
 

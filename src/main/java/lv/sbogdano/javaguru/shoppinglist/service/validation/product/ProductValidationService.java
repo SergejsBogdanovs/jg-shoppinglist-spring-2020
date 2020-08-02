@@ -10,13 +10,15 @@ import java.util.Set;
 
 public class ProductValidationService {
 
-    private Set<ProductValidationRule> validationRules;
+    private final Set<ProductValidationRule> validationRules;
 
     public ProductValidationService(Set<ProductValidationRule> validationRules) {
         this.validationRules = validationRules;
     }
 
     public void validate(ProductDto productDto) {
+        if (productDto == null) throw new IllegalArgumentException(
+                ProductValidationExceptionMessages.PRODUCT_NULL_EXCEPTION_MESSAGE);
         validationRules.forEach(rule -> rule.validate(productDto));
     }
 

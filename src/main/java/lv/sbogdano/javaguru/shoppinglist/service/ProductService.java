@@ -5,6 +5,7 @@ import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.mapper.BeanMapper;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 
@@ -30,7 +31,8 @@ public class ProductService {
 
     public ProductDto findProductById(long id) {
         ProductEntity foundProductEntity = repository.getProductById(id)
-                .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
+                .orElseThrow(() -> new ItemNotFoundException(
+                        ProductValidationExceptionMessages.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE + id));
         return beanMapper.toProductDto(foundProductEntity);
     }
 
@@ -42,7 +44,8 @@ public class ProductService {
 
     public ProductDto deleteProduct(long id) {
         ProductEntity deletedProductEntity = repository.delete(id)
-                .orElseThrow(() -> new ItemNotFoundException("Product not found. Id: " + id));
+                .orElseThrow(() -> new ItemNotFoundException(
+                        ProductValidationExceptionMessages.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE + id));
         return beanMapper.toProductDto(deletedProductEntity);
     }
 }

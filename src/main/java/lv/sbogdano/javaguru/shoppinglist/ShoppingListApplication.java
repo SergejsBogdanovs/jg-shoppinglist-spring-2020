@@ -29,6 +29,7 @@ public class ShoppingListApplication {
         var productService = new ProductService(productRepository, productValidationService, beenMapper);
 
         var consoleUI = new ConsoleUI(productService);
+
         consoleUI.start();
     }
 }
