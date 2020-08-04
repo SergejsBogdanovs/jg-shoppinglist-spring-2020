@@ -3,11 +3,10 @@ package lv.sbogdano.javaguru.shoppinglist.service;
 import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.mapper.BeanMapper;
-import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
 import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 
 public class ProductService {
 
