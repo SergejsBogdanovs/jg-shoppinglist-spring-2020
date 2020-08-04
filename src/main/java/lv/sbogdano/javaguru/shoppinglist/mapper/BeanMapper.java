@@ -2,7 +2,9 @@ package lv.sbogdano.javaguru.shoppinglist.mapper;
 
 import lv.sbogdano.javaguru.shoppinglist.domain.ProductEntity;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BeanMapper {
 
     public ProductDto toProductDto(ProductEntity productEntity) {

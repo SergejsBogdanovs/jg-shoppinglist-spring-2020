@@ -7,7 +7,9 @@ import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemNotFoundException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductService {
 
     private final ProductRepository repository;

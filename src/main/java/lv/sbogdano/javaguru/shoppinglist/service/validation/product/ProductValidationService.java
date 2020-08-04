@@ -1,13 +1,12 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product;
 
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
-import lv.sbogdano.javaguru.shoppinglist.repository.ProductInMemoryRepository;
-import lv.sbogdano.javaguru.shoppinglist.repository.ProductRepository;
-import lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule.*;
+import lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule.ProductValidationRule;
+import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class ProductValidationService {
 
     private final Set<ProductValidationRule> validationRules;

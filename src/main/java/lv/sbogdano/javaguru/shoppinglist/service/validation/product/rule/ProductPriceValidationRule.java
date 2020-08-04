@@ -3,7 +3,9 @@ package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductPriceValidationRule implements ProductValidationRule {
 
     private String message;
