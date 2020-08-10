@@ -15,7 +15,7 @@ public class ProductValidationServiceTest {
     private ProductValidationService victim;
 
     @Test
-    public void shouldThrowExceptionWhenProductIsNull() {
+    public void shouldThrowIAEWhenProductIsNull() {
         assertThatThrownBy(() -> victim.validate(null))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_NULL_EXCEPTION_MESSAGE);

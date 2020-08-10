@@ -1,35 +1,44 @@
 package lv.sbogdano.javaguru.shoppinglist.service.validation.product.rule;
 
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import lv.sbogdano.javaguru.shoppinglist.dto.ProductDto;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.exception.ItemValidationException;
 import lv.sbogdano.javaguru.shoppinglist.service.validation.product.ProductValidationExceptionMessages;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.MockitoRule;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnitParamsRunner.class)
 public class ProductDiscountValidationRuleTest {
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule();
 
     @InjectMocks
     private ProductDiscountValidationRule victim;
 
-    @Test
-    public void productDiscountShouldBeNumber() {
-        String[] invalidDiscountFormats = {null, "", " ", "a", "-1", "101"};
-
-        for (String invalidDiscountFormat : invalidDiscountFormats) {
-            assertThatThrownBy(() -> victim.validate(getProductDto(invalidDiscountFormat)))
-                    .isInstanceOf(ItemValidationException.class)
-                    .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_WRONG_FORMAT_EXCEPTION);
-        }
+    private static final Object[] getInvalidDiscounts() {
+        return new String[][]{{null}, {""}, {" "}, {"a"}, {"-1"}, {"101"}};
     }
 
     @Test
-    public void ifPriceIsSmallDiscountNotAllowed() {
+    @Parameters(method = "getInvalidDiscounts")
+    public void shouldThrowIVEForInvalidDiscount(String invalidDiscountFormat) {
+        assertThatThrownBy(() -> victim.validate(getProductDto(invalidDiscountFormat)))
+                .isInstanceOf(ItemValidationException.class)
+                .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_WRONG_FORMAT_EXCEPTION);
+    }
+
+    @Test
+    public void shouldThrowIVEIfPriceIsSmall() {
         assertThatThrownBy(() -> victim.validate(getProductDto("10")))
                 .isInstanceOf(ItemValidationException.class)
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_PRICE_IS_SMALL_EXCEPTION);
