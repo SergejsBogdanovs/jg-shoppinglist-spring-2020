@@ -19,6 +19,13 @@ import static org.junit.Assert.*;
 @RunWith(JUnitParamsRunner.class)
 public class ProductDiscountValidationRuleTest {
 
+    private static final long ID = 1L;
+    private static final String NAME = "NAME";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String INVALID_PRICE = "19";
+    private static final String VALID_DISCOUNT = "10";
+    private static final String CATEGORY = "CATEGORY";
+
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
@@ -39,19 +46,19 @@ public class ProductDiscountValidationRuleTest {
 
     @Test
     public void shouldThrowIVEIfPriceIsSmall() {
-        assertThatThrownBy(() -> victim.validate(getProductDto("10")))
+        assertThatThrownBy(() -> victim.validate(getProductDto(VALID_DISCOUNT)))
                 .isInstanceOf(ItemValidationException.class)
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_DISCOUNT_PRICE_IS_SMALL_EXCEPTION);
     }
 
-    private ProductDto getProductDto(String discount) {
+    private ProductDto getProductDto(String invalidDiscount) {
         var productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName("NAME");
-        productDto.setDescription("DESCRIPTION");
-        productDto.setPrice("19");
-        productDto.setDiscount(discount);
-        productDto.setCategory("CATEGORY");
+        productDto.setId(ID);
+        productDto.setName(NAME);
+        productDto.setDescription(DESCRIPTION);
+        productDto.setPrice(INVALID_PRICE);
+        productDto.setDiscount(invalidDiscount);
+        productDto.setCategory(CATEGORY);
 
         return productDto;
     }

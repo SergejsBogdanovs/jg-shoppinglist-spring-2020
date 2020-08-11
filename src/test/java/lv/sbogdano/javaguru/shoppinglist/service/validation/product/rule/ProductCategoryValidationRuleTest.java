@@ -18,6 +18,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @RunWith(JUnitParamsRunner.class)
 public class ProductCategoryValidationRuleTest {
 
+    private static final long ID = 1L;
+    private static final String NAME = "NAME";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String PRICE = "PRICE";
+    private static final String DISCOUNT = "DISCOUNT";
+
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
@@ -36,14 +42,14 @@ public class ProductCategoryValidationRuleTest {
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_CATEGORY_EMPTY_EXCEPTION_MESSAGE);
     }
 
-    private ProductDto getProductDto(String category) {
+    private ProductDto getProductDto(String invalidCategory) {
         var productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName("NAME");
-        productDto.setDescription("DESCRIPTION");
-        productDto.setPrice("PRICE");
-        productDto.setDiscount("DISCOUNT");
-        productDto.setCategory(category);
+        productDto.setId(ID);
+        productDto.setName(NAME);
+        productDto.setDescription(DESCRIPTION);
+        productDto.setPrice(PRICE);
+        productDto.setDiscount(DISCOUNT);
+        productDto.setCategory(invalidCategory);
 
         return productDto;
     }

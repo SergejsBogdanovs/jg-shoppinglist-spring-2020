@@ -19,6 +19,12 @@ import static org.junit.Assert.*;
 @RunWith(JUnitParamsRunner.class)
 public class ProductPriceValidationRuleTest {
 
+    private static final long ID = 1L;
+    private static final String NAME = "NAME";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String DISCOUNT = "DISCOUNT";
+    private static final String CATEGORY = "CATEGORY";
+
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
@@ -49,14 +55,14 @@ public class ProductPriceValidationRuleTest {
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_PRICE_IS_ZERO_EXCEPTION_MESSAGE);
     }
 
-    private ProductDto getProductDto(String price) {
+    private ProductDto getProductDto(String invalidPrice) {
         var productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName("NAME");
-        productDto.setDescription("DESCRIPTION");
-        productDto.setPrice(price);
-        productDto.setDiscount("DISCOUNT");
-        productDto.setCategory("CATEGORY");
+        productDto.setId(ID);
+        productDto.setName(NAME);
+        productDto.setDescription(DESCRIPTION);
+        productDto.setPrice(invalidPrice);
+        productDto.setDiscount(DISCOUNT);
+        productDto.setCategory(CATEGORY);
 
         return productDto;
     }

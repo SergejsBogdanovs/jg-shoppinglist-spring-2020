@@ -24,6 +24,13 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnitParamsRunner.class)
 public class ProductNameValidationRuleTest {
 
+    private static final long ID = 1L;
+    private static final String NAME = "NAME";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String PRICE = "PRICE";
+    private static final String DISCOUNT = "DISCOUNT";
+    private static final String CATEGORY = "CATEGORY";
+
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
@@ -37,7 +44,7 @@ public class ProductNameValidationRuleTest {
         return new String[][]{{null}, {""}, {" "}};
     }
 
-    private static final Object[] getShortAndLongNames() {
+    private static final Object[] getInvalidNameLengths() {
         return new String[][]{{"a"}, {new String((new char[33])).replace('\0', 'a')}};
     }
 
@@ -50,9 +57,9 @@ public class ProductNameValidationRuleTest {
     }
 
     @Test
-    @Parameters(method = "getShortAndLongNames")
-    public void shouldThrowIVEForTooShortAndTooLongName(String shortLongName) {
-        assertThatThrownBy(() -> victim.validate(getProductDto(shortLongName)))
+    @Parameters(method = "getInvalidNameLengths")
+    public void shouldThrowIVEForTooShortAndTooLongName(String invalidNameLength) {
+        assertThatThrownBy(() -> victim.validate(getProductDto(invalidNameLength)))
                 .isInstanceOf(ItemValidationException.class)
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_NAME_LENGTH_EXCEPTION_MESSAGE);
     }
@@ -60,35 +67,34 @@ public class ProductNameValidationRuleTest {
     @Test
     public void shouldThrowIVEWhenNameNotUnique() {
 
-        when(productRepository.getProductByName("NAME")).thenReturn(Optional.of(productEntity()));
+        when(productRepository.getProductByName(NAME)).thenReturn(Optional.of(getProductEntity()));
 
-        assertThatThrownBy(() -> victim.validate(getProductDto("NAME")))
+        assertThatThrownBy(() -> victim.validate(getProductDto(NAME)))
                 .isInstanceOf(ItemValidationException.class)
                 .hasMessage(ProductValidationExceptionMessages.PRODUCT_NAME_UNIQUE_EXCEPTION_MESSAGE);
     }
 
-    private ProductDto getProductDto(String name) {
+    private ProductDto getProductDto(String invalidName) {
         var productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName(name);
-        productDto.setDescription("DESCRIPTION");
-        productDto.setPrice("PRICE");
-        productDto.setDiscount("DISCOUNT");
-        productDto.setCategory("CATEGORY");
+        productDto.setId(ID);
+        productDto.setName(invalidName);
+        productDto.setDescription(DESCRIPTION);
+        productDto.setPrice(PRICE);
+        productDto.setDiscount(DISCOUNT);
+        productDto.setCategory(CATEGORY);
 
         return productDto;
     }
 
-    private ProductEntity productEntity() {
+    private ProductEntity getProductEntity() {
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setId(1L);
-        productEntity.setName("NAME");
-        productEntity.setDescription("DESCRIPTION");
-        productEntity.setPrice("PRICE");
-        productEntity.setDiscount("DISCOUNT");
-        productEntity.setCategory("CATEGORY");
+        productEntity.setId(ID);
+        productEntity.setName(NAME);
+        productEntity.setDescription(DESCRIPTION);
+        productEntity.setPrice(PRICE);
+        productEntity.setDiscount(DISCOUNT);
+        productEntity.setCategory(CATEGORY);
+
         return productEntity;
     }
-
-
 }

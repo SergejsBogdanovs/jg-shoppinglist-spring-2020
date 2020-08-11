@@ -30,6 +30,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceTest {
 
+    private static final long ID = 1L;
+    private static final String NAME = "NAME";
+    private static final String DESCRIPTION = "DESCRIPTION";
+    private static final String PRICE = "PRICE";
+    private static final String DISCOUNT = "DISCOUNT";
+    private static final String CATEGORY = "CATEGORY";
+
     @Mock
     private ProductRepository productRepository;
     @Mock
@@ -42,24 +49,24 @@ public class ProductServiceTest {
 
     @Test
     public void shouldSaveProduct() {
-        when(productRepository.save(any())).thenReturn(productEntity());
-        when(beanMapper.toProductDto(productEntity())).thenReturn(productDto());
+        when(productRepository.save(any())).thenReturn(getProductEntity());
+        when(beanMapper.toProductDto(getProductEntity())).thenReturn(getProductDto());
 
-        ProductDto savedProductDto = victim.save(productDto());
+        ProductDto savedProductDto = victim.save(getProductDto());
 
         verify(productValidationService).validate(any());
 
-        assertThat(savedProductDto).isEqualTo(productDto());
+        assertThat(savedProductDto).isEqualTo(getProductDto());
     }
 
     @Test
     public void shouldFindProductById() {
-        when(productRepository.getProductById(anyLong())).thenReturn(Optional.of(productEntity()));
-        when(beanMapper.toProductDto(productEntity())).thenReturn(productDto());
+        when(productRepository.getProductById(anyLong())).thenReturn(Optional.of(getProductEntity()));
+        when(beanMapper.toProductDto(getProductEntity())).thenReturn(getProductDto());
 
         ProductDto foundProduct = victim.findProductById(1L);
 
-        assertThat(foundProduct).isEqualTo(productDto());
+        assertThat(foundProduct).isEqualTo(getProductDto());
     }
 
     @Test
@@ -73,44 +80,44 @@ public class ProductServiceTest {
 
     @Test
     public void shouldUpdateProductById() {
-        when(productRepository.update(any())).thenReturn(productEntity());
-        when(beanMapper.toProductDto(productEntity())).thenReturn(productDto());
+        when(productRepository.update(any())).thenReturn(getProductEntity());
+        when(beanMapper.toProductDto(getProductEntity())).thenReturn(getProductDto());
 
-        ProductDto replacedProduct = victim.updateProductById(productDto());
+        ProductDto replacedProduct = victim.updateProductById(getProductDto());
 
         verify(productValidationService).validate(any());
-        assertThat(replacedProduct).isEqualTo(productDto());
+        assertThat(replacedProduct).isEqualTo(getProductDto());
     }
 
     @Test
     public void shouldDeleteProduct() {
-        when(productRepository.delete(anyLong())).thenReturn(Optional.of(productEntity()));
-        when(beanMapper.toProductDto(productEntity())).thenReturn(productDto());
+        when(productRepository.delete(anyLong())).thenReturn(Optional.of(getProductEntity()));
+        when(beanMapper.toProductDto(getProductEntity())).thenReturn(getProductDto());
 
         ProductDto deletedProduct = victim.deleteProduct(1L);
 
-        assertThat(deletedProduct).isEqualTo(productDto());
+        assertThat(deletedProduct).isEqualTo(getProductDto());
     }
 
-    private ProductEntity productEntity() {
+    private ProductEntity getProductEntity() {
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setId(1L);
-        productEntity.setName("NAME");
-        productEntity.setDescription("DESCRIPTION");
-        productEntity.setPrice("PRICE");
-        productEntity.setDiscount("DISCOUNT");
-        productEntity.setCategory("CATEGORY");
+        productEntity.setId(ID);
+        productEntity.setName(NAME);
+        productEntity.setDescription(DESCRIPTION);
+        productEntity.setPrice(PRICE);
+        productEntity.setDiscount(DISCOUNT);
+        productEntity.setCategory(CATEGORY);
         return productEntity;
     }
 
-    private ProductDto productDto() {
+    private ProductDto getProductDto() {
         ProductDto productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName("NAME");
-        productDto.setDescription("DESCRIPTION");
-        productDto.setPrice("PRICE");
-        productDto.setDiscount("DISCOUNT");
-        productDto.setCategory("CATEGORY");
+        productDto.setId(ID);
+        productDto.setName(NAME);
+        productDto.setDescription(DESCRIPTION);
+        productDto.setPrice(PRICE);
+        productDto.setDiscount(DISCOUNT);
+        productDto.setCategory(CATEGORY);
         return productDto;
     }
 
